@@ -16,4 +16,6 @@ int main()
 
     printf("*ptr1 -> %c\n", *ptr1);
     
+    return 0;
+    
 }
