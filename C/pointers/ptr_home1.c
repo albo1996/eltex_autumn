@@ -21,5 +21,7 @@ int main()
     printf("4:%d\n", *ptr);//Четвёртый байт
 
     printf("a = %d\n", a);//Выводим новое значение a
+    
+    return 0;
 
 }
