@@ -149,7 +149,7 @@ void show_phonebook()//4
     if (amt > 0)
     {
     
-    printf("Все записи:\n\n");
+    	printf("Все записи:\n\n");
     
         for (i = 0; i < amt; i++) 
         {
@@ -158,7 +158,7 @@ void show_phonebook()//4
 			    "Имя: %s\n"
 			    "Номер абонента: %s\n\n", subs[i].id, subs[i].surname,
 			    subs[i].name, subs[i].number);
-	    }
+	}
     }
 }
 
