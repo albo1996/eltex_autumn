@@ -38,7 +38,6 @@ void add_sub()//1
     if (amt > 0)
     {
         subs = (struct phonebook*) realloc(subs, (amt + 1) * sizeof(struct phonebook));
-        
     }
 
     printf("Введите имя абонента: \n");
@@ -65,7 +64,6 @@ void remove_sub()//2
     if (amt == 0)
     {
         printf("В справочнике нет записей!\n\n");
-
     }
     
     if (amt > 0)
