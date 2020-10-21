@@ -8,9 +8,9 @@ int amt = 0;//Количество записей
 struct phonebook
 {
     int id;
-    char name[20];
-    char surname[20];
-    char number[15];
+    char name[21];
+    char surname[21];
+    char number[16];
 };
 
 struct phonebook* subs;
@@ -109,7 +109,7 @@ void remove_sub()//2
 void sub_search()//3
 {  
     int i;
-    char sought_number[15];
+    char sought_number[16];
 
     if (amt == 0)
     {
