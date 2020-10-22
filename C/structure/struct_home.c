@@ -80,7 +80,7 @@ void remove_sub()//2
 
         if (id_r > amt - 1)
         {
-            printf("Нет записи с таким номером!");
+            printf("Нет записи с таким номером!\n\n");
         }
 
         else
