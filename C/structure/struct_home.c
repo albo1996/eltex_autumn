@@ -8,9 +8,9 @@ int amt = 0;//Количество записей
 struct phonebook
 {
     int id;
-    char name[20];
-    char surname[20];
-    char number[15];
+    char name[21];
+    char surname[21];
+    char number[16];
 };
 
 struct phonebook* subs;
@@ -122,7 +122,7 @@ void remove_sub()//2
 void sub_search()//3
 {  
     int i;
-    char sought_number[15];
+    char sought_number[16];
 
     if (amt == 0)
     {
@@ -163,7 +163,7 @@ void show_phonebook()//4
     if (amt > 0)
     {
     
-    printf("Все записи:\n\n");
+    	printf("Все записи:\n\n");
     
         for (i = 0; i < amt; i++) 
         {
@@ -172,8 +172,14 @@ void show_phonebook()//4
 			    "Имя: %s\n"
 			    "Номер абонента: %s\n\n", subs[i].id, subs[i].surname,
 			    subs[i].name, subs[i].number);
-	    }
+	}
     }
+}
+
+void quit()//0
+{
+    free(subs);
+    exit(0);
 }
 
 
@@ -205,7 +211,7 @@ int main()
                 show_phonebook();
                 break;
             case 0:
-                exit(0);
+                quit();
             default:
                 printf("Некорректный пункт меню!\n\n");
 
