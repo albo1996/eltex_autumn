@@ -8,9 +8,9 @@ int amt = 0;//Количество записей
 struct phonebook
 {
     int id;
-    char name[21];
-    char surname[21];
-    char number[16];
+    char name[20];
+    char surname[20];
+    char number[15];
 };
 
 struct phonebook* subs;
@@ -39,15 +39,19 @@ void add_sub()//1
     {
         subs = (struct phonebook*) realloc(subs, (amt + 1) * sizeof(struct phonebook));
     }
+	
 
     printf("Введите имя абонента: \n");
     scanf("%s", subs[amt].name);
+    
 
     printf("Введите фамилию абонента: \n");
     scanf("%s", subs[amt].surname);
-    
+  
+
     printf("Введите номер телефона абонента: \n");
     scanf("%s", subs[amt].number);
+    
     
 
     printf("\n");
@@ -64,6 +68,7 @@ void remove_sub()//2
     if (amt == 0)
     {
         printf("В справочнике нет записей!\n\n");
+
     }
     
     if (amt > 0)
@@ -73,43 +78,51 @@ void remove_sub()//2
         printf("Введите номер записи, которую нужно удалить: \n");
         scanf("%d", &id_r);
 
-        struct phonebook* new_subs = (struct phonebook*) malloc((amt - 1) * sizeof(struct phonebook));
-
-        for (i = 0; i < amt - 1; i++)
+        if (id_r > amt - 1)
         {
-            if (i >= id_r)
-            {
-                new_subs[i].id = i; 
-                strcpy(new_subs[i].name, subs[i+1].name);
-                strcpy(new_subs[i].surname, subs[i+1].surname);
-                strcpy(new_subs[i].number, subs[i+1].number);
-            }
-
-            if (i < id_r)
-            {
-                new_subs[i].id = i; 
-                strcpy(new_subs[i].name, subs[i].name);
-                strcpy(new_subs[i].surname, subs[i].surname);
-                strcpy(new_subs[i].number, subs[i+1].number);
-
-            }
+            printf("Нет записи с таким номером!");
         }
 
-        free(subs);
-        subs = new_subs;
-        new_subs = NULL;
+        else
+        {
+            struct phonebook* new_subs = (struct phonebook*) malloc((amt - 1) * sizeof(struct phonebook));
 
-        amt--;
+            for (i = 0; i < amt - 1; i++)
+            {
+                if (i >= id_r)
+                {
+                    new_subs[i].id = i; 
+                    strcpy(new_subs[i].name, subs[i+1].name);
+                    strcpy(new_subs[i].surname, subs[i+1].surname);
+                    strcpy(new_subs[i].number, subs[i+1].number);
+                }
 
-        printf("\n");
-        printf("Запись удалена\n\n");
+                if (i < id_r)
+                {
+                    new_subs[i].id = i; 
+                    strcpy(new_subs[i].name, subs[i].name);
+                    strcpy(new_subs[i].surname, subs[i].surname);
+                    strcpy(new_subs[i].number, subs[i+1].number);
+
+                }
+            }
+
+            free(subs);
+            subs = new_subs;
+            new_subs = NULL;
+
+            amt--;
+
+            printf("\n");
+            printf("Запись удалена\n\n");
+        }
     }
 }
 
 void sub_search()//3
 {  
     int i;
-    char sought_number[16];
+    char sought_number[15];
 
     if (amt == 0)
     {
@@ -120,6 +133,7 @@ void sub_search()//3
     {
         printf("Введите номер телефона абонента:\n\n");
         scanf("%s", sought_number);
+        
         printf("\n\n");
        
 
@@ -149,7 +163,7 @@ void show_phonebook()//4
     if (amt > 0)
     {
     
-    	printf("Все записи:\n\n");
+    printf("Все записи:\n\n");
     
         for (i = 0; i < amt; i++) 
         {
@@ -158,7 +172,7 @@ void show_phonebook()//4
 			    "Имя: %s\n"
 			    "Номер абонента: %s\n\n", subs[i].id, subs[i].surname,
 			    subs[i].name, subs[i].number);
-	}
+	    }
     }
 }
 
