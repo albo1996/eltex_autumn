@@ -12,7 +12,7 @@ $(p)/libmul.so: mul.o
 $(p)/libdivi.so: divi.o
 	gcc -shared divi.o -o $(p)/libdivi.so
 add.o: src/add.c
-	gcc -fPIC -c $(s)/add.c
+	mkdir plugins && gcc -fPIC -c $(s)/add.c
 sub.o: src/sub.c
 	gcc -fPIC -c $(s)/sub.c
 mul.o: src/mul.c
