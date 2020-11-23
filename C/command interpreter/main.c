@@ -22,7 +22,7 @@ int main()
     {
     	printf("$ ");
 	    fgets(command, 50, stdin);
-    	i = strlen(command) - 1;
+	    i = strlen(command) - 1;
 	    if (command[i] == '\n')
 	    {
 		    command[i]='\0';
