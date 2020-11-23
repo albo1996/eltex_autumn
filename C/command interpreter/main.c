@@ -10,6 +10,7 @@
 int main()
 {
     pid_t pid;
+    int i;
     extern int errno;
     int status;
     int cmp;
@@ -20,10 +21,14 @@ int main()
     while(1)
     {
     	printf("$ ");
-    	scanf("%50s", command);
-    	
-    	cmp = strcmp("exit", command);
-    	
+	    fgets(command, 50, stdin);
+    	i = strlen(command) - 1;
+	    if (command[i] == '\n')
+	    {
+		    command[i]='\0';
+	    }
+	
+	    cmp = strcmp("exit", command);
     	if (cmp == 0)
     	{
     		exit(0);
