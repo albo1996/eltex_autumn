@@ -21,18 +21,18 @@ int main()
     while(1)
     {
     	printf("$ ");
-	    fgets(command, 50, stdin);
-	    i = strlen(command) - 1;
-	    if (command[i] == '\n')
-	    {
-		    command[i]='\0';
-	    }
+	fgets(command, 50, stdin);
+	i = strlen(command) - 1;
+	if (command[i] == '\n')
+	{
+		command[i]='\0';
+	}
 	
-	    cmp = strcmp("exit", command);
+	cmp = strcmp("exit", command);
     	if (cmp == 0)
     	{
     		exit(0);
-    	}
+    	}	
     	
     	argv[0] = (char*)malloc(strlen(path) + strlen(command) + 1);
     	strcpy(argv[0], path);
