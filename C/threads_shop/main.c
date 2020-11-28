@@ -17,6 +17,7 @@ int main()
 	for(i = 0; i < 5; i++)
 	{
 		store[i] = random_number(1000, 1200);
+		pthread_mutex_init(&mutex[i], NULL);
 	}
 
 	pthread_create(&loader, NULL, loading, &sum);
