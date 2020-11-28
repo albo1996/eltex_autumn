@@ -24,7 +24,7 @@ int main()
 
 	for(int i = 0; i < 3; i++)
 	{
-    	pthread_create(&customers[i], NULL, purchases, &sum);
+    		pthread_create(&customers[i], NULL, purchases, &sum);
 	}
 	
 	pthread_join(loader, NULL);
