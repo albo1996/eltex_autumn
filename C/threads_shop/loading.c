@@ -8,7 +8,11 @@ void* loading(void* param)
 	{
 		j = random_number(0, 4);
 
+		pthread_mutex_lock(&mutex[j]);
+
 		store[j] += random_number(300, 500);
+
+		pthread_mutex_unlock(&mutex[j]);
 
 		sleep(1);
 	}
