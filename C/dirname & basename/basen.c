@@ -16,7 +16,7 @@ static void createKey(void)
 char* basen(char* pathname)
 {
 	char *string;
-    char *buf;
+    	char *buf;
 	char filename[255];
 	int amount;
 	int i = 0, j = 0;
@@ -32,11 +32,11 @@ char* basen(char* pathname)
 		pthread_setspecific(basenKey, string);
 	}
 	
-    strcpy(string, pathname);
+    	strcpy(string, pathname);
 
-    amount = strlen(string);
+    	amount = strlen(string);
 
-    buf = (char*)malloc(amount + 1);
+    	buf = (char*)malloc(amount + 1);
 
 	while (i < amount)
 	{
@@ -53,15 +53,15 @@ char* basen(char* pathname)
 	}
 
 	strcpy(string, buf);
-    free(buf);
+    	free(buf);
 
-    amount = strlen(string);
+    	amount = strlen(string);
 
-    if ((string[amount - 1] == '/') && (amount != 1))
-    {
+    	if ((string[amount - 1] == '/') && (amount != 1))
+    	{
 	    string[amount - 1] = 0;
 	    amount = strlen(string);
-    }
+    	}
 
 	for (i = 0; i < amount; i++)
 	{
@@ -72,14 +72,14 @@ char* basen(char* pathname)
 	}
 	
 	if ((string[amount - 1] == '/') && (strcmp(string, "/") == 1))
-    {
+    	{
 	    slash--;
 	    string[amount - 1] = 0;
 	    amount--;
-    }
+    	}
 
-    while (1)
-    {
+    	while (1)
+    	{
 		if (amount == 0)
 		{
 			strcpy(string, ".");
@@ -91,20 +91,20 @@ char* basen(char* pathname)
 			break;
 		}
 		
-	    if (!strcmp(string, "/"))
-	    {
+	    	if (!strcmp(string, "/"))
+	    	{
 		    break;
-	    }
+	    	}
 
-	    if (!strcmp(string,"."))
-	    {
+	    	if (!strcmp(string,"."))
+	    	{
 		    break;
-	    }
+	    	}
 		
-	    if (!strcmp(string,".."))
-	    {
+	    	if (!strcmp(string,".."))
+	    	{
 		    break;
-	    }
+	    	}
 
 	    for (i = 0; slash > 0; i++)
 	    {
@@ -114,8 +114,8 @@ char* basen(char* pathname)
 				
 			    if (slash == 0)
 			    {
-					j = 0;
-					i++;
+				    j = 0;
+				    i++;
 				    while (i < amount)
 					{
 						filename[j] = string[i];
@@ -127,11 +127,11 @@ char* basen(char* pathname)
 		    }
 	    }
 		
-		strcpy(string, filename);
+	strcpy(string, filename);
         break;		
     }
 
-	return string;
+return string;
 }
 
 
