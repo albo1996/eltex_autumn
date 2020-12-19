@@ -16,7 +16,7 @@ static void createKey(void)
 char* dirn(char* pathname)
 {
 	char *string;
-    char *buf;
+    	char *buf;
 	int amount;
 	int i = 0, j = 0;
 	int slash = 0;
@@ -31,11 +31,11 @@ char* dirn(char* pathname)
 		pthread_setspecific(dirnKey, string);
 	}
 	
-    strcpy(string, pathname);
+    	strcpy(string, pathname);
 
-    amount = strlen(string);
+    	amount = strlen(string);
 
-    buf = (char*)malloc(amount + 1);
+    	buf = (char*)malloc(amount + 1);
 
 	while (i < amount)
 	{
@@ -52,38 +52,38 @@ char* dirn(char* pathname)
 	}
 
 	strcpy(string, buf);
-    free(buf);
+    	free(buf);
 
-    amount = strlen(string);
+    	amount = strlen(string);
 
-    if ((string[amount - 1] == '/') && (amount != 1))
-    {
-	    string[amount - 1] = 0;
-	    amount = strlen(string);
-    }
+    	if ((string[amount - 1] == '/') && (amount != 1))
+    	{
+	    	string[amount - 1] = 0;
+	    	amount = strlen(string);
+   	}
 
 	for (i = 0; i < amount; i++)
 	{
 		if (string[i] == '/')
-	    {
+	    	{
 			slash++;
-	    }
+	    	}
 	}
 	
 	if ((string[amount - 1] == '/') && (strcmp(string, "/") == 1))
-    {
+    	{
 	    slash--;
 	    string[amount - 1] = 0;
 	    amount--;
-    }
+    	}
 
-    while (1)
-    {
-	    if ((!strcmp(string, "/")) || (slash == 1) && (string[0] == '/'))
-	    {
+    	while (1)
+    	{
+		if ((!strcmp(string, "/")) || (slash == 1) && (string[0] == '/'))
+	    	{
 		    strcpy(string,"/");
 		    break;
-	    }
+	    	}
 
 	    if ((amount = 0) || (slash == 0) || (amount > 0) && (slash == 1))
 	    {
@@ -110,10 +110,10 @@ char* dirn(char* pathname)
 		    }
 	    }
         
-		break;		
+	break;		
     }
 
-	return string;
+return string;
 }
 
 
