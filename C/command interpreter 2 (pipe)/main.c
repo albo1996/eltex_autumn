@@ -13,22 +13,22 @@
 
 int main()
 {
-    pid_t pid;
-    int i, j;
+	pid_t pid;
+	int i, j;
 	int p_count;
 	int l_count;
 	int cmp;
 	int pfd[2];
-    extern int errno;
-    char command[512];
+    	extern int errno;
+    	char command[512];
 	char *command_path[10];
-    char *argv[256];
-    char path[]="/bin/";
+    	char *argv[256];
+    	char path[]="/bin/";
     
 	
 	while(1)
-    {
-    	printf("$ ");
+    	{
+    		printf("$ ");
 		fgets(command, 50, stdin);
 		i = strlen(command) - 1;
 		if (command[i] == '\n')
@@ -37,10 +37,10 @@ int main()
 		}
 	
 		cmp = strcmp("exit", command);
-    	if (cmp == 0)
-    	{
-    		exit(0);
-    	}
+    		if (cmp == 0)
+    		{
+    			exit(0);
+    		}
 
 		p_count = command_count(command);
 
