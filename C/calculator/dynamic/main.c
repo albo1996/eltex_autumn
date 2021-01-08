@@ -95,7 +95,7 @@ int main()
 
 		if (item == 0)
 		{
-			exit(1);
+			exit(0);
 		}
 
 		if ((item < 0) || (item > menu_size))
