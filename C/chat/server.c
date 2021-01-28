@@ -82,16 +82,25 @@ void get_message(char* message, char* chat, mqd_t message_queue)
 void send_chat(char* chat, int users_number, mqd_t chat_queue)
 {
 	int status;
+	int size;
+	
 	if (users_number > 0)
 	{
+		size = strlen(chat);
 		for (int i = 0; i < users_number; i++)
 		{
+			if (size == 0)
+			{
+				break;
+			}
+
 			status = mq_send(chat_queue, chat, strlen(chat), 0);
 		}
 	}
 }
 void delete_name(char* name_list, mqd_t delete_queue)
 {
+
 	char* ptr;
     char buf[4096];
     char name[20];
@@ -151,7 +160,7 @@ int main()
 	mq_unlink("/name_queue");
 	mq_unlink("/name_list_queue");
 	mq_unlink("/message_queue");
-    mq_unlink("/chat_queue");
+    	mq_unlink("/chat_queue");
 	mq_unlink("/delete_queue");
 
 	name_q = mq_open("/name_queue", flags, mode, &attr_name);
