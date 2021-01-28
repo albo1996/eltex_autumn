@@ -49,7 +49,6 @@ struct chat_str
 void send_name(char* name, mqd_t name_queue)
 {
 	input_name = newwin(6, 45, 12, 20);
-	move(0, 0);
 	waddstr(input_name,"Enter your name: ");
     wgetstr(input_name, name);
 
@@ -67,6 +66,8 @@ void* get_name_list(void* param)
 
 	while (1)
 	{
+		curs_set(0);
+		refresh();
 		memset(ptr -> list, 0, 4096);
 		mq_receive(ptr -> name_list_q, ptr -> list, 4096, NULL);
 
@@ -75,19 +76,37 @@ void* get_name_list(void* param)
 			werase(sub_users_win);
 			wprintw(sub_users_win, ptr -> list);
     		wrefresh(sub_users_win);
-		}	
+		}
+		refresh();
+		sleep(1);
 	}
 }
 
 void* get_chat(void* param)
 {
+	struct chat_str* ptr;
+	ptr = param;
+	int status;
+
 	while (1)
 	{
-		mq_receive(_chat.chat_q, _chat.chat, 8192, NULL);
-
+		status = mq_receive(ptr->chat_q, ptr->chat, 8192, NULL);
+		
+		if (status == -1)
+		{
+			continue;
+		}
+		
+		curs_set(0);
+		refresh();
 		werase(sub_chat_win);
-		wprintw(sub_chat_win,"%s", _chat.chat);
 		wrefresh(sub_chat_win);
+		wprintw(sub_chat_win,"%s", ptr->chat);
+		wrefresh(sub_chat_win);
+		wrefresh(users_win);
+		wrefresh(input_win);
+		refresh();
+		sleep(1);
 	}
 }
 
@@ -97,17 +116,22 @@ void send_message(char* name, mqd_t message_queue)
 	char buf[300];
 
 	echo();
-	input_message = newwin(4, 20, 20, 20);
-	waddstr(input_message, "Enter the message: \n");
-	move(20, 21);
+	input_message = newwin(10, 60, 26, 1);
+	waddstr(input_message, "Message: ");
+	curs_set(TRUE);
+	refresh();
     wgetstr(input_message, buf);
 
 	sprintf(message, "[%s]: ", name);
 	strncat(message, buf, strlen(buf));
 	mq_send(message_queue, message, strlen(message), 0);
+	
 	wclear(input_message);
-
 	wrefresh(input_message);
+	wrefresh(sub_chat_win);
+	wrefresh(users_win);
+	wrefresh(sub_users_win);
+	wrefresh(input_win);
     delwin(input_message);
 	noecho();
 	refresh();
@@ -116,9 +140,8 @@ void send_message(char* name, mqd_t message_queue)
 int main()
 {
 	char name[20];
-	pthread_t reciever_list_name, sender_message, reciever_chat ;
-	int item, s;
-	char buf[300];
+	pthread_t reciever_list_name, reciever_chat ;
+	int item;
 	mqd_t delete_q, name_q, message_q;
 
 	name_q = mq_open("/name_queue", O_RDWR | O_NONBLOCK);
@@ -130,29 +153,32 @@ int main()
 	initscr();
 
     signal(SIGWINCH, sig_winch);
-    curs_set(0);
+    curs_set(TRUE);
     refresh();
 
 	send_name(name, name_q);
 
+	curs_set(FALSE);
+	refresh();
+
 	chat_win = newwin(25, 60, 0, 0);
 
-    box(chat_win, '|', '-');
+    box(chat_win, 0, 0);
 
     wrefresh(chat_win);
 
-	sub_chat_win = derwin(chat_win, 23, 48, 1, 1);
+	sub_chat_win = derwin(chat_win, 23, 58, 1, 1);
 
 	wrefresh(sub_chat_win);
 
     users_win = newwin(25, 25, 0, 62);
-    box(users_win, '|', '-');
+    box(users_win, 0, 0);
     wrefresh(users_win);
 
 	sub_users_win = derwin(users_win, 23, 23, 1, 1);
 	wrefresh(sub_users_win);
 
-    input_win = newwin(5, 60, 27, 0);
+    input_win = newwin(1, 35, 26, 58);
 	wprintw(input_win, "   F1 - Wrie F2 - Exit\t");
     wrefresh(input_win);
 
@@ -170,9 +196,14 @@ int main()
         {
             case KEY_F(1):
                 send_message(name, message_q);
+				refresh();
                 break;
             case KEY_F(2):
 				mq_send(delete_q, name, strlen(name), 0);
+				pthread_detach(reciever_list_name);
+				pthread_detach(reciever_chat);
+				curs_set(TRUE);
+				refresh();
 				endwin();
                 exit(0);
         }
