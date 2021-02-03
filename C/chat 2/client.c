@@ -164,16 +164,17 @@ void delete_name(char* name, sem_t* sem)
 
     	while (ptr != NULL)
     	{
-        	if (strcmp(name, ptr) != 0)
-        {
-            strncat(name_list, ptr, strlen(ptr));
-            strcat(name_list, "\n");
-            ptr = strtok(NULL, "\n");
-        }
-        else
-        {
-            ptr = strtok(NULL, "\n");
-        }
+        
+		if (strcmp(name, ptr) != 0)
+        	{
+            		strncat(name_list, ptr, strlen(ptr));
+            		strcat(name_list, "\n");
+            		ptr = strtok(NULL, "\n");
+        	}
+        	else
+        	{
+            		ptr = strtok(NULL, "\n");
+        	}
     }
     memset(addr, 0, sb.st_size);
     strncat(addr, name_list, strlen(name_list));
@@ -248,7 +249,7 @@ while (1)
 				curs_set(TRUE);
 				refresh();
 				endwin();
-                exit(0);
+                		exit(0);
         }
     }
 }
