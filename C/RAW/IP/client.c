@@ -30,12 +30,10 @@ int main()
   char buf[BUF_SIZE];
   char datagram[DATAGRAM_LENGTH];
   struct sockaddr_in saddr;
-  char res[128];
   struct iphdr ip_header;
 
   memset(datagram, 0, DATAGRAM_LENGTH);
   memset(buf, 0, BUF_SIZE);
-  memset(res, 0, 128);
 
   printf("Введите строку...\n");
   fgets(msg, MESSAGE_SIZE, stdin);
@@ -53,7 +51,7 @@ int main()
   ip_header.version = IPVERSION;
   ip_header.ihl = 5;
   ip_header.tos = 0;
-  ip_header.tot_len = 28 + strlen(msg) + 1;
+  ip_header.tot_len = 28 + sizeof(msg);
   ip_header.id = 0;
   ip_header.frag_off = 0;
   ip_header.ttl = IPDEFTTL;
@@ -64,7 +62,7 @@ int main()
 
   memcpy(datagram, (const void*)&ip_header, 20);
   memcpy(datagram + IP_LEN, (const void*)&udp_hdr, 8);
-  strncat(datagram + IP_LEN + 8, msg, strlen(msg));
+  strncat(datagram + IP_LEN + 8, msg, sizeof(msg));
 
   fd = socket(AF_INET, SOCK_RAW, IPPROTO_UDP);
   setsockopt(fd, IPPROTO_IP, IP_HDRINCL, &param, sizeof(param));
