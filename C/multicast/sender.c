@@ -7,7 +7,7 @@
 #include <unistd.h>
 
 #define SIZE 64
-#define ADDR "192.168.1.255"
+#define ADDR "224.0.0.1"
 
 int main()
 {
@@ -16,6 +16,7 @@ int main()
     int fd;
     char buf[SIZE];
     struct sockaddr_in saddr;
+    struct ip_mreq mreq;
 
 	memset(buf, 0, SIZE);
 
@@ -28,7 +29,10 @@ int main()
     saddr.sin_port = htons(3200); 
     saddr.sin_addr.s_addr = inet_addr(ADDR);
 
-	setsockopt(fd, SOL_SOCKET, SO_BROADCAST, &param, sizeof(param));
+    mreq.imr_multiaddr.s_addr = inet_addr(ADDR);
+    mreq.imr_interface.s_addr = htonl(INADDR_ANY);
+
+	setsockopt(fd, SOL_SOCKET, IP_ADD_MEMBERSHIP, (const void*)&mreq, sizeof(mreq));
 	len = sizeof(struct sockaddr_in);
 
     while (1)
