@@ -25,7 +25,7 @@ ssize_t read_proc(struct file *filp, char *buf, size_t count, loff_t *offp)
 
 ssize_t write_proc(struct file *filp, const char *buf, size_t count, loff_t *offp)
 {
-	int compare = memcmp(buf, "hello", 5);
+	int compare = memcmp(buf, "hello\n", 6);
 
 	if (compare == 0)
 	{
