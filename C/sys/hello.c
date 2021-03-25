@@ -6,7 +6,7 @@
 #include <linux/fs.h>
 #include <linux/string.h>
 
-#define SYS_ENTRY_FILENAME "rw_file"
+#define SYS_FILENAME "rw_file"
 
 
 static struct kobject *example_kobject;
@@ -43,13 +43,13 @@ static int __init sys_init (void)
 {
     int error = 0;
     pr_debug("Module initialized successfully \n");
-    example_kobject = kobject_create_and_add(SYS_ENTRY_FILENAME, kernel_kobj);
+    example_kobject = kobject_create_and_add(SYS_FILENAME, kernel_kobj);
     if(!example_kobject)
         return -ENOMEM;
     error = sysfs_create_file(example_kobject, &foo_attribute.attr);
     if (error)
     {
-        pr_debug("failed to create the SYS_ENTRY_FILENAME file in /sys/kernel/ \n");
+        pr_debug("failed to create the SYS_FILENAME file in /sys/kernel/ \n");
     }
     return error;
 }
