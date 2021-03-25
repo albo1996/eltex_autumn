@@ -130,8 +130,6 @@ static int do_simple_request(struct request *rq, unsigned int *nr_bytes)
             if (device_write_counter)
             {
                 sprintf(b_buf, "Hi!\n");
-                pos += b_len;
-                *nr_bytes += b_len;
                 device_write_counter--;
             }
         }
